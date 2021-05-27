@@ -1,6 +1,6 @@
 const Host = require("./hostSchema.js");
 var Room = require("./roomSchema.js");
-
+var Song = require("./songSchema.js");
 
 exports.createNewHost = async function(tokens, hostName){
   console.log(hostName);
@@ -43,12 +43,11 @@ exports.createNewRoom = async function (host_id) {
 exports.addSongToPool = async function (song, roomId) {
   room = await this.getRoomById(roomId);
   console.log(song);
+  song = await new Song(song);
+  await song.save();
   room.playlist.songs.push(song);
 
-  return await room.save(function (err, doc) {
-    if (err) return false;
-    return true;
-  });
+  await room.save();
 };
 
 exports.refreshTokens = async function (newToken, roomId) {
@@ -67,6 +66,7 @@ exports.addUserToRoom = async function (user, roomId) {
 exports.clearDB = async function () {
   const roomsGone = await Room.deleteMany({});
   const hostsGone = await Host.deleteMany({});
+  const songsGone = await Song.deleteMany({});
   console.log(`Cleared database (removed ${roomsGone.deletedCount} rooms, ${hostsGone.deletedCount} hosts).`);
 };
 
@@ -157,17 +157,16 @@ exports.highestVotedSong = async function(roomId){
   return bigSong.id;
 }
 
-exports.moveToCurrent= async function (songId,roomId){
-  const room = await this.getRoomById(roomId);
-  console.log(room)
-  song = room.playlist.songs.find(element => element.id == songId);
-  console.log(song);
-  song.remove();
+exports.moveToCurrent= async function (songId,roomId){ 
+  const room = await Room.findOne({ code: roomId }).populate("playlist.songs.name");
+  console.log("here?")
+  console.log(room);
+  const song = room.playlist.songs.find(element => element.id == songId);
+  console.log(song);  
   room.playlist.currentSong = song;
-  room.save(function (err) {
-    if (err) return handleError(err);
-    return "moved song";
-  });
+  //song.remove();
+  console.log(room);
+  await room.save();
   }
 
 exports.removeLikeFromSong = async function (roomId, songId) {

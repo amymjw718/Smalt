@@ -40,20 +40,19 @@ async function main() {
   }
 
   const TESTCONNECTIONSTRING =
-    "mongodb+srv://smaltadmin:AG47gX6WIP3YUaB2@cluster0.knzot.mongodb.net/roomRegistry2?retryWrites=true&w=majority";
+    "mongodb+srv://smaltadmin:AG47gX6WIP3YUaB2@cluster0.knzot.mongodb.net/roomRegistry?retryWrites=true&w=majority";
 
   if (connect.connectToDatabase(TESTCONNECTIONSTRING)) {
     console.log("connection success");
   }
-  // await query.clearDB();
-  // const host_id = await query.createNewHost(testToken,"jimmy")
-  // const roomCode = await query.createNewRoom(host_id);
-  // console.log(await query.refreshTokens("idk",roomCode))
-  // console.log(await query.getAccessToken(roomCode));
-  // xsd = await query.addSongToPool(testSong3,roomCode);
-  // console.log(xsd);
-  plsss = await query.moveToCurrent("kill me","1G3NHb");
-  console.log(plsss);
+  await query.clearDB();
+  const host_id = await query.createNewHost(testToken,"jimmy")
+  const roomCode = await query.createNewRoom(host_id);
+  console.log(await query.refreshTokens("idk",roomCode))
+  console.log(await query.getAccessToken(roomCode));
+  xsd = await query.addSongToPool(testSong3,roomCode);
+  plsss = await query.moveToCurrent("kill me",roomCode);
+
 
   // var roomCode = await query.createNewRoom(, makeCode(4));
   // var b = await query.addSongToPool(testSong2, roomCode);
