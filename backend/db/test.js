@@ -22,7 +22,7 @@ async function main() {
     songDuration: 10,
     id: makeCode(10),
   };
-  var testSong2 = {
+  var testSong3 = {
     name: "the wheels on the bus",
     imageURL: "irefuse",
     artistNames: "no",
@@ -45,11 +45,15 @@ async function main() {
   if (connect.connectToDatabase(TESTCONNECTIONSTRING)) {
     console.log("connection success");
   }
-  await query.clearDB();
-  const host_id = await query.createNewHost(testToken,"jimmy")
-  const roomCode = await query.createNewRoom(host_id);
-  console.log(await query.refreshTokens("idk",roomCode))
-  console.log(await query.getAccessToken(roomCode));
+  // await query.clearDB();
+  // const host_id = await query.createNewHost(testToken,"jimmy")
+  // const roomCode = await query.createNewRoom(host_id);
+  // console.log(await query.refreshTokens("idk",roomCode))
+  // console.log(await query.getAccessToken(roomCode));
+  // xsd = await query.addSongToPool(testSong3,roomCode);
+  // console.log(xsd);
+  plsss = await query.moveToCurrent("kill me","1G3NHb");
+  console.log(plsss);
 
   // var roomCode = await query.createNewRoom(, makeCode(4));
   // var b = await query.addSongToPool(testSong2, roomCode);

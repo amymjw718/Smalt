@@ -33,11 +33,8 @@ exports.createNewRoom = async function (host_id) {
   room.host = host_id;
   await addData(room);
   console.log("createroomquery");
-  console.log(room);
   const host = await Host.findOne({_id : host_id});
-  console.log(host);
   ans = await host.rooms.push(room._id);
-  console.log(ans);
   host.save();
 
   return codee;
@@ -148,6 +145,31 @@ exports.addLikeToSong = async function (roomId, songId) {
   return updatedRoom;
 };
 
+exports.highestVotedSong = async function(roomId){
+  songs = await this.getAllSongs(roomId);
+  console.log(songs);
+  var bigSong = songs.songs[0];
+  songs.songs.forEach(song =>{
+    if(song.upVoteCount>bigSong.upVoteCount){
+      bigSong =song;
+    }
+  });
+  return bigSong.id;
+}
+
+exports.moveToCurrent= async function (songId,roomId){
+  const room = await this.getRoomById(roomId);
+  console.log(room)
+  song = room.playlist.songs.find(element => element.id == songId);
+  console.log(song);
+  song.remove();
+  room.playlist.currentSong = song;
+  room.save(function (err) {
+    if (err) return handleError(err);
+    return "moved song";
+  });
+  }
+
 exports.removeLikeFromSong = async function (roomId, songId) {
   console.log("remove like called");
   var updatedRoom = await Room.findOneAndUpdate(
@@ -161,6 +183,8 @@ exports.removeLikeFromSong = async function (roomId, songId) {
       returnOriginal: false,
     }
   );
+
+
 
   return updatedRoom;
 };
