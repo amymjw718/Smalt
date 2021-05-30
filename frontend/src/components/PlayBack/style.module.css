@@ -1,0 +1,8 @@
+.playBar {
+    outline: red dotted 2px;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+}

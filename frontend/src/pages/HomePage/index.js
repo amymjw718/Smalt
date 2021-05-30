@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "./style.module.css";
-import { SongSearch, WebSocketProvider } from "../../components";
+import { SongSearch, WebSocketProvider, PlayBack } from "../../components";
 import {
   Button,
   MenuItem,
@@ -133,6 +133,7 @@ export default function HomePage() {
           </PlaylistContext.Provider>
         </div>
       </div>
+      <PlayBack />
     </div>
   );
 }
