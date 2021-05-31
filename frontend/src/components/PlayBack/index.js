@@ -9,8 +9,8 @@ export default function PlayBack() {
 
     return (
         <div className={styles.playBar}>
-            <IconButton size="small" >
-                <PlayCircleFilled fontSize="large" color="secondary" />
+            <IconButton className={styles.playButton} >
+                <PlayCircleFilled className={styles.playIcon} />
             </IconButton>
         </div>
     );
