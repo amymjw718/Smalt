@@ -13,6 +13,10 @@ export default function PlayBack() {
   const [cookies, setCookie] = useCookies(["name"]);
   const [currentSong, setCurrentSong] = useContext(CurrentSongContext);
 
+  // const songNameShowOnScreen = (currentSong) => {
+  //   currentSong.name.length > 5 ? currentSong.name.substr(0, 5) + "..." : currentSong.name
+  // }
+
   const handlePlayButton = async () => {
     const toUpdate = {
       roomCode: cookies.room.id,
@@ -39,7 +43,7 @@ export default function PlayBack() {
     <div className={styles.playBar}>
       {!(Object.keys(currentSong).length === 0) && (
         <div className={styles.currentSong}>
-          <label className={styles.songLabel}>{currentSong.name}</label>
+          <label className={styles.songLabel}>{currentSong.name.length>15 ? currentSong.name.substr(0, 15)+'...' : currentSong.name }</label>
           <br></br>
           <label>{formatArtists(currentSong.artists)}</label>
         </div>
