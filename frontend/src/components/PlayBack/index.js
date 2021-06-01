@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styles from "./style.module.css";
 import IconButton from "@material-ui/core/IconButton";
 import PlayCircleFilled from "@material-ui/icons/PlayCircleFilled";
+import PauseCircleFilled from '@material-ui/icons/PauseCircleFilled';
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { CurrentSongContext } from "../../currentsong-context";
@@ -11,10 +12,6 @@ const ENDPOINT = "http://localhost:3001/";
 export default function PlayBack() {
   const [cookies, setCookie] = useCookies(["name"]);
   const [currentSong, setCurrentSong] = useContext(CurrentSongContext);
-
-  console.log(currentSong);
-  console.log(Object.keys(currentSong).length);
-  console.log(!(Object.keys(currentSong).length === 0));
 
   const handlePlayButton = async () => {
     const toUpdate = {
@@ -48,7 +45,7 @@ export default function PlayBack() {
         </div>
       )}
       <IconButton onClick={handlePlayButton} className={styles.playButton}>
-        <PlayCircleFilled className={styles.playIcon} />
+        {currentSong.isPlaying ? <PauseCircleFilled className={styles.playIcon} /> : <PlayCircleFilled className={styles.playIcon} /> }
       </IconButton>
     </div>
   );

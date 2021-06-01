@@ -170,15 +170,28 @@ exports.moveToCurrent = async function (roomId) {
     return prev.upVoteCount > current.upVoteCount ? prev : current;
   });
 
-  highestSong.isPlaying = true;
-
   room.playlist.currentSong = highestSong;
+  var songToReturn = JSON.parse(JSON.stringify(highestSong));
+  songToReturn.isPlaying = true;
+  room.playlist.currentSong.isPlaying = true;
 
   const indexToDelete = room.playlist.songs.indexOf(highestSong);
   room.playlist.songs.splice(indexToDelete, 1);
   
   await addData(room);
-  return highestSong;
+  return songToReturn;
+};
+
+exports.toggleCurrentPlaying = async function (roomId) {
+  console.log("toggle playing query");
+  var room = await Room.findOne({ code: roomId });
+
+  room.playlist.currentSong.isPlaying = !room.playlist.currentSong.isPlaying;
+  const songToReturn = room.playlist.currentSong;
+  console.log(songToReturn)
+  
+  await addData(room);
+  return songToReturn;
 };
 
 exports.getCurrentSong = async function (roomId) {
