@@ -170,6 +170,21 @@ exports.moveToCurrent = async function (roomId) {
     return prev.upVoteCount > current.upVoteCount ? prev : current;
   });
 
+  highestSong.isPlaying = true;
+
   room.playlist.currentSong = highestSong;
+
+  const indexToDelete = room.playlist.songs.indexOf(highestSong);
+  room.playlist.songs.splice(indexToDelete, 1);
+  
   await addData(room);
+  return highestSong;
+};
+
+exports.getCurrentSong = async function (roomId) {
+  const room = await Room.findOne({ code: roomId });
+  const currentSong = room.playlist.currentSong;
+  console.log(currentSong)
+
+  return currentSong;
 };

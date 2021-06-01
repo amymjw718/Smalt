@@ -116,7 +116,19 @@ exports.fetchAccessToken = async function (code) {
     return output;
 }
 
-
+exports.togglePlay = async function(token, song_id, device_id){
+    headers = getHeaders(token);
+    body = {context_uri : "spotify:tracks:" + song_id}
+    str = "[\"spotify:track:" + song_id + "\"]"
+    body = {uris :[`spotify:track:${song_id}`]}
+    config = {
+        headers: headers,
+        params: `${device_id}`,
+    }
+    res = await axios.put(PLAY, body,config).catch(err =>{
+        console.log(err.response.data);
+    });
+}
 
 exports.refreshAccessToken = async function (refreshToken) {
     let body = "grant_type=refresh_token";

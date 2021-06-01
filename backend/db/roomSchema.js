@@ -27,6 +27,9 @@ const roomSchema = new Schema({
   //playlist subdocument
   playlist: {
     currentSong: {
+        isPlaying: {
+          type: Boolean,
+        },
         upVoteCount: {
           type: Number,
         },
