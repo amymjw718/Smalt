@@ -18,16 +18,18 @@ async function main() {
     name: "lol",
     imageURL: "nourl",
     artistNames: "yes",
-    upVoteCount: 0,
+    upVoteCount: 1,
     songDuration: 10,
     id: makeCode(10),
   };
-  var testSong2 = {
-    name: "the wheels on the bus",
-    imageURL: "irefuse",
-    artistNames: "no",
-    songDuration: 10,
-    id: "kill me",
+
+  var testSong3 = {
+    name: "test",
+    imageURL: "test",
+    artistNames: "test",
+    upVoteCount: 10,
+    songDuration: 100,
+    id: makeCode(10),
   };
 
   var testUser = {
@@ -48,6 +50,7 @@ async function main() {
   await query.clearDB();
   const host_id = await query.createNewHost(testToken,"jimmy")
   const roomCode = await query.createNewRoom(host_id);
+
   console.log(await query.refreshTokens("idk",roomCode))
   console.log(await query.getAccessToken(roomCode));
 
@@ -57,8 +60,15 @@ async function main() {
   
 
 
-  // await query.addSongToPool(testSong, roomCode);
-  // await query.addSongToPool(testSong2, roomCode);
+  await query.addSongToPool(testSong, roomCode);
+  await query.addSongToPool(testSong2, roomCode);
+  await query.addSongToPool(testSong3, roomCode);
+
+  console.log(await query.getAccessToken(roomCode));
+
+  console.log(await query.getAllSongs(roomCode));
+
+  await query.moveToCurrent(roomCode);
   // //await query.addUserToRoom(testUser, roomCode);
   // await query.removeLikeFromSong(roomCode, testSong.id);
 
