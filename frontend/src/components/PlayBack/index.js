@@ -43,9 +43,9 @@ export default function PlayBack() {
     <div className={styles.playBar}>
       {!(Object.keys(currentSong).length === 0) && (
         <div className={styles.currentSong}>
-          <label className={styles.songLabel}>{currentSong.name.length>15 ? currentSong.name.substr(0, 15)+'...' : currentSong.name }</label>
+          <label className={styles.songLabel}>{currentSong.name.length>12 ? currentSong.name.split(/[\s\n]/)[0]+' ...' : currentSong.name }</label>
           <br></br>
-          <label>{formatArtists(currentSong.artists)}</label>
+          <label>{formatArtists(currentSong.artists).length>12 ? formatArtists(currentSong.artists).split(/[\s\n]/)[0]+' '+formatArtists(currentSong.artists).split(/[\s\n]/)[1]+' ...' : formatArtists(currentSong.artists)}</label>
         </div>
       )}
       <IconButton onClick={handlePlayButton} className={styles.playButton}>

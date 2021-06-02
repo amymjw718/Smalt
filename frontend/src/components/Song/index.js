@@ -76,8 +76,8 @@ export default function Song(props) {
           />
         </TableCell>
         <TableCell className={styles.tableCellHead}>
-          <div className={styles.songName}>{song.name}</div>
-          <div className={styles.songArtist}>{song.artists}</div>
+          <div className={styles.songName}>{song.name.length>15 ? song.name.split(/[\s\n]/)[0]+' '+song.name.split(/[\s\n]/)[1]+' ...' : song.name}</div>
+          <div className={styles.songArtist}>{song.artists.length>2 ? song.artists[0]+' ...' : song.artists}</div>
           <div className={styles.songArtist}>{song.upVoteCount}</div>
         </TableCell>
         <TableCell className={styles.tableCell}>
