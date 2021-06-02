@@ -100,22 +100,9 @@ export default function HomePage() {
           </p>
           <div>
             <div style={{ display: "inline-block" }}>
-              <IconButton className={styles.devButton}>
-                <PlayArrowIcon />
-              </IconButton>
-            </div>
-            <div style={{ display: "inline-block" }}>
               <h1 className={styles.name}>Room: {cookies.room.id}</h1>
             </div>
             <div style={{ display: "inline-block" }}>
-              <IconButton
-                className={styles.devButton}
-                onClick={handleOpenMenuDev}
-                aria-controls="menu-list-dev"
-                aria-haspopup="true"
-              >
-                <DevicesIcon />
-              </IconButton>
               <Menu
                 id="menu-list-dev"
                 anchorEl={anchorElDev}
