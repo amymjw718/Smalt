@@ -134,6 +134,7 @@ exports.togglePlay = async function (resumeFlag, token, song_id, device_id) {
   res = await axios.put(PLAY, body, config).catch((err) => {
     console.log(err.response.data);
   });
+  return res;
 };
 
 exports.togglePause = async function (token, device_id) {
@@ -147,6 +148,21 @@ exports.togglePause = async function (token, device_id) {
   res = await axios.put(PAUSE, {}, config).catch((err) => {
     console.log(err.response.data);
   });
+};
+
+exports.currentSongInfo = async function (token) {
+  console.log("spotfy getcurrentsong");
+  headers = getHeaders(token);
+  config = {
+    headers: headers,
+  };
+
+  const url = CURRENTLYPLAYING + "?market=NZ";
+
+  const res = await axios.get(url, config).catch((err) => {
+    console.log(err.response.data);
+  });
+  return res.data;
 };
 
 exports.refreshAccessToken = async function (refreshToken) {
