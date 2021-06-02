@@ -3,12 +3,14 @@ import { Playlist } from "../";
 import socketIOClient from "socket.io-client";
 import { useCookies } from "react-cookie";
 import { PlaylistContext } from "../../playlist-context";
+import { CurrentSongContext } from "../../currentsong-context";
 
 const ENDPOINT = "http://localhost:3001/";
 
 export default function WebSocketProvider() {
     const [cookies, setCookie] = useCookies(["name"]);
     const [playlist, setPlaylist] = useContext(PlaylistContext);
+    const [currentSong, setCurrentSong] = useContext(CurrentSongContext);
 
     function sortSongsByUpVoteCount(array) {
         return array.sort(function (a, b) {
@@ -56,6 +58,14 @@ export default function WebSocketProvider() {
 
         socket.on('newSong', (song) => {
             addSong(song);
+        });
+
+        socket.on('playSong', (song) => {
+            setCurrentSong(song);
+        });
+
+        socket.on('updatePlaylist', (playlist) => {
+            setPlaylist(sortSongsByUpVoteCount(playlist));
         });
 
         return function cleanup() {

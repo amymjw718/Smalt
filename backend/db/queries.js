@@ -1,4 +1,5 @@
 const Host = require("./hostSchema.js");
+const roomSchema = require("./roomSchema.js");
 var Room = require("./roomSchema.js");
 
 exports.createNewHost = async function (tokens, hostName) {
@@ -105,7 +106,7 @@ exports.roomDoesExist = async function (roomCode) {
 exports.getAccessToken = async function (roomId) {
   console.log(`room id: ${roomId}`);
   const room = await Room.findOne({ code: roomId }).populate("host");
-  console.log(room);
+  
   return room.host.tokens.accessToken;
 };
 exports.getRefreshToken = async function (roomId) {
@@ -169,7 +170,34 @@ exports.moveToCurrent = async function (roomId) {
   const highestSong = room.playlist.songs.reduce(function (prev, current) {
     return prev.upVoteCount > current.upVoteCount ? prev : current;
   });
-
   room.playlist.currentSong = highestSong;
+  var songToReturn = JSON.parse(JSON.stringify(highestSong));
+  songToReturn.isPlaying = true;
+  room.playlist.currentSong.isPlaying = true;
+
+  const indexToDelete = room.playlist.songs.indexOf(highestSong);
+  room.playlist.songs.splice(indexToDelete, 1);
+  
   await addData(room);
+  return songToReturn;
+};
+
+exports.toggleCurrentPlaying = async function (roomId) {
+  console.log("toggle playing query");
+  var room = await Room.findOne({ code: roomId });
+
+  room.playlist.currentSong.isPlaying = !room.playlist.currentSong.isPlaying;
+  const songToReturn = room.playlist.currentSong;
+  console.log(songToReturn)
+  
+  await addData(room);
+  return songToReturn;
+};
+
+exports.getCurrentSong = async function (roomId) {
+  const room = await Room.findOne({ code: roomId });
+  const currentSong = room.playlist.currentSong;
+  console.log(currentSong)
+
+  return currentSong;
 };

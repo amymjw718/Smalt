@@ -2,49 +2,46 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "./style.module.css";
 import { SongSearch, WebSocketProvider, PlayBack } from "../../components";
-import {
-  Button,
-  MenuItem,
-  Menu,
-} from "@material-ui/core";
-import { useCookies } from 'react-cookie';
-import { PlaylistContext } from '../../playlist-context';
+import { Button, MenuItem, Menu } from "@material-ui/core";
+import { useCookies } from "react-cookie";
+import { PlaylistContext } from "../../playlist-context";
+import { CurrentSongContext } from "../../currentsong-context";
 
 /* These import statements, import various icons shown on the homepage from Material-UI */
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import IconButton from '@material-ui/core/IconButton';
-import DehazeIcon from '@material-ui/icons/Dehaze';
-import DevicesIcon from '@material-ui/icons/Devices';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import IconButton from "@material-ui/core/IconButton";
+import DehazeIcon from "@material-ui/icons/Dehaze";
+import DevicesIcon from "@material-ui/icons/Devices";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import PauseIcon from "@material-ui/icons/Pause";
 import { OutlinedFlag } from "@material-ui/icons";
 /* This HomePage() function harnesses Material-UI and React to create the homepage. It obtains the history object from the history hook in which uses the created room to 
 obtain and retrieve the cookies. The pop over menu button has the onClick prop set to handleOpenMenu function where it sets the anchor element to open the pop over menu.*/
 
 export default function HomePage() {
-
   const history = useHistory();
-  const [cookies, setCookie] = useCookies(['room']);
+  const [cookies, setCookie] = useCookies(["room"]);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [playlist, setPlaylist] = React.useState( [] );
+  const [playlist, setPlaylist] = React.useState([]);
+  const [currentSong, setCurrentSong] = React.useState({});
   const [anchorElDev, setAnchorElDev] = React.useState(null);
   const [playPause, setPlayPause] = React.useState(true);
 
   const handlePlayPause = () => {
-    if (playPause){
+    if (playPause) {
       setPlayPause = false;
-    }else{
+    } else {
       setPlayPause = true;
     }
-  }
+  };
 
-  const DevButton = () =>{
+  const DevButton = () => {
     if (playPause) {
       return <PlayArrowIcon />;
     } else {
       return <PauseIcon />;
     }
-  }
+  };
 
   const handleOpenMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -98,20 +95,25 @@ export default function HomePage() {
       </div>
       <div className={styles.bodyPartContainer}>
         <div>
-          <p className={styles.namelogo}><i>Smalt</i></p>
+          <p className={styles.namelogo}>
+            <i>Smalt</i>
+          </p>
           <div>
-          <div style={{display: "inline-block"}}>
-            <IconButton className={styles.devButton}>
-              <PlayArrowIcon />
-            </IconButton>
-          </div>
-          <div style={{display: "inline-block"}}><h1 className={styles.name}>Room: {cookies.room.id}</h1></div>
-            <div style={{display: "inline-block"}}>
+            <div style={{ display: "inline-block" }}>
+              <IconButton className={styles.devButton}>
+                <PlayArrowIcon />
+              </IconButton>
+            </div>
+            <div style={{ display: "inline-block" }}>
+              <h1 className={styles.name}>Room: {cookies.room.id}</h1>
+            </div>
+            <div style={{ display: "inline-block" }}>
               <IconButton
-                className={styles.devButton}  
+                className={styles.devButton}
                 onClick={handleOpenMenuDev}
                 aria-controls="menu-list-dev"
-                aria-haspopup="true">
+                aria-haspopup="true"
+              >
                 <DevicesIcon />
               </IconButton>
               <Menu
@@ -125,15 +127,19 @@ export default function HomePage() {
                 <MenuItem onClick={handleCloseDev}>My account</MenuItem>
                 <MenuItem onClick={handleCloseDev}>Logout</MenuItem>
               </Menu>
-              </div>
+            </div>
           </div>
           <PlaylistContext.Provider value={[playlist, setPlaylist]}>
-          <SongSearch />
-          <WebSocketProvider />
+            <SongSearch />
+            <CurrentSongContext.Provider value={[currentSong, setCurrentSong]}>
+              <WebSocketProvider />
+            </CurrentSongContext.Provider>
           </PlaylistContext.Provider>
         </div>
       </div>
-      <PlayBack />
+      <CurrentSongContext.Provider value={[currentSong, setCurrentSong]}>
+        <PlayBack />
+      </CurrentSongContext.Provider>
     </div>
   );
 }
