@@ -65,7 +65,6 @@ export default function WebSocketProvider() {
         });
 
         socket.on('updatePlaylist', (playlist) => {
-            console.log(playlist)
             setPlaylist(sortSongsByUpVoteCount(playlist));
         });
 

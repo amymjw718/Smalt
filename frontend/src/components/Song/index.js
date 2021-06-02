@@ -2,37 +2,35 @@ import React, { useState, useEffect } from "react";
 import styles from "./style.module.css";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import { useSessionStorage } from '../../useSessionStorage';
+import { useSessionStorage } from "../../useSessionStorage";
 import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
-import {
-  Avatar,
-  TableCell,
-  TableRow,
-
-} from "@material-ui/core";
+import { Avatar, TableCell, TableRow } from "@material-ui/core";
 
 export default function Song(props) {
-  console.log("I was called");
-  console.log(props);
+  console.log("song render");
+  console.log(props.props.name);
+  console.log(props.props.id);
   const song = props.props;
   var formattedArtist = "";
   song.artists.forEach(function (element) {
     if (formattedArtist == "") {
-      formattedArtist = element
+      formattedArtist = element;
     } else {
-      formattedArtist = formattedArtist + ", " + element
+      formattedArtist = formattedArtist + ", " + element;
     }
   });
 
-  const [likeButtonColor, setLikeButtonColor] = useState('inherit');
+  const [likeButtonColor, setLikeButtonColor] = useState("inherit");
   const [liked, setLikedStatus] = useSessionStorage(song.id, false);
   //const [cachedLike, setCachedLike] = useLocalStorage(song.id, liked);
   const [cookies, setCookie] = useCookies(["name"]);
 
   useEffect(() => {
-    setLikedStatus(liked);
+    setLikedStatus(JSON.parse(window.sessionStorage.getItem(song.id)));
+    console.log("likedstatus of song")
+    console.log(liked)
     if (liked) {
       setLikeButtonColor("secondary");
     } else {
@@ -77,7 +75,7 @@ export default function Song(props) {
         </TableCell>
         <TableCell className={styles.tableCellHead}>
           <div className={styles.songName}>{song.name}</div>
-          <div className={styles.songArtist}>{song.artists}</div>
+          <div className={styles.songArtist}>{formattedArtist}</div>
           <div className={styles.songArtist}>{song.upVoteCount}</div>
         </TableCell>
         <TableCell className={styles.tableCell}>
