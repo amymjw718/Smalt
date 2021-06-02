@@ -1,4 +1,5 @@
 const Host = require("./hostSchema.js");
+const roomSchema = require("./roomSchema.js");
 var Room = require("./roomSchema.js");
 
 exports.createNewHost = async function (tokens, hostName) {
@@ -105,7 +106,7 @@ exports.roomDoesExist = async function (roomCode) {
 exports.getAccessToken = async function (roomId) {
   console.log(`room id: ${roomId}`);
   const room = await Room.findOne({ code: roomId }).populate("host");
-  console.log(room);
+  
   return room.host.tokens.accessToken;
 };
 exports.getRefreshToken = async function (roomId) {
@@ -169,7 +170,6 @@ exports.moveToCurrent = async function (roomId) {
   const highestSong = room.playlist.songs.reduce(function (prev, current) {
     return prev.upVoteCount > current.upVoteCount ? prev : current;
   });
-
   room.playlist.currentSong = highestSong;
   var songToReturn = JSON.parse(JSON.stringify(highestSong));
   songToReturn.isPlaying = true;
