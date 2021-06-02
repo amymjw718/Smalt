@@ -7,18 +7,21 @@ const spotify = require("../Spotify/spotifyHandler")
 var router = express.Router();
 
 router.post("/login", async (req, res) => {
-  log(`authrequest recieved: ${req.body.authCode}`);
+  console.log(`authrequest recieved: ${req.body.authCode}`);
   var accessAndRefreshTokens = await spotify.fetchAccessToken(
     req.body.authCode
   );
   
   
   var hostUserName = await spotify.getUsername(accessAndRefreshTokens.accessToken);
-  var host = await query.createNewHost(accessAndRefreshTokens, hostUserName);
-  
+  var host = query.getHostById(hostUserName);
+  if(!host){
+    host = await query.createNewHost(accessAndRefreshTokens, hostUserName);
+  }
   if (host) {
-    
     res.status(200).send(hostUserName);
+  }else{
+    res.status(500)
   }
 });
 

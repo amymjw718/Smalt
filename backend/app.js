@@ -43,6 +43,16 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+  // log errors to console
+   app.use(logErrors);
+
+// log errors to console
+function logErrors(err, req, res, next) {
+ console.error(err.stack);
+ next(err);
+}
+
+
 console.log(`connectiontodb:${connect.connectToDatabase()}`);
 
 /**
