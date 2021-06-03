@@ -7,7 +7,7 @@ import { LandingOptions } from "../../components";
 export default function LandingPage() {
     return (
         <div className={styles.rootContainer} >
-            <p className={styles.name} align="center"><i>Smalt</i></p>
+            <p className={styles.name} align="center"><h1>Smalt</h1></p>
             <LandingOptions />
         </div>
     );

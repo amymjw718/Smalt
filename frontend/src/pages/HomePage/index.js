@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "./style.module.css";
 import { SongSearch, WebSocketProvider, PlayBack } from "../../components";
-import { Button, MenuItem, Menu } from "@material-ui/core";
+import { Button, MenuItem, Menu, TextField } from "@material-ui/core";
 import { useCookies } from "react-cookie";
 import { PlaylistContext } from "../../playlist-context";
 import { CurrentSongContext } from "../../currentsong-context";
@@ -69,11 +69,24 @@ export default function HomePage() {
 
   return (
     <div className={styles.rootContainer}>
-      <div class="subdiv_allinline">
+      <div className={styles.topBar}>
         <IconButton className={styles.backButton} onClick={handleBack}>
           <ArrowBackIosIcon />
         </IconButton>
-        <IconButton
+        <div className={styles.codeContainer}>
+          <label className={styles.codeDisplay}>Invite your friends</label>
+          <br></br><br></br>
+          <TextField
+            className={styles.code}
+            value={cookies.room.id}
+            variant="outlined"
+            size="small"
+            InputProps={{
+              style: { color: "#dad9d7" },
+            }}
+          />
+        </div>
+        {/* <IconButton
           className={styles.menuButton}
           onClick={handleOpenMenu}
           aria-controls="menu-list"
@@ -91,23 +104,26 @@ export default function HomePage() {
           <MenuItem onClick={handleClose}>Login</MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
           <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
+        </Menu> */}
       </div>
       <div className={styles.bodyPartContainer}>
-        <div>
+        <div className={styles.songsContainer}>
           <p className={styles.namelogo}>
-            <i>Smalt</i>
+            {/* <div style={{ display: "inline-block" }}>
+              <label className={styles.codeDisplay}>code: {cookies.room.id}</label>
+            </div> */}
+            <h1>Smalt</h1>
           </p>
           <div>
-            <div style={{ display: "inline-block" }}>
+            {/* <div style={{ display: "inline-block" }}>
               <IconButton className={styles.devButton}>
                 <PlayArrowIcon />
               </IconButton>
-            </div>
-            <div style={{ display: "inline-block" }}>
-              <h1 className={styles.name}>Room: {cookies.room.id}</h1>
-            </div>
-            <div style={{ display: "inline-block" }}>
+            </div> */}
+            {/* <div style={{ display: "inline-block" }}>
+              <h1 className={styles.codeDisplay}>code: {cookies.room.id}</h1>
+            </div> */}
+            {/* <div style={{ display: "inline-block" }}>
               <IconButton
                 className={styles.devButton}
                 onClick={handleOpenMenuDev}
@@ -127,7 +143,7 @@ export default function HomePage() {
                 <MenuItem onClick={handleCloseDev}>My account</MenuItem>
                 <MenuItem onClick={handleCloseDev}>Logout</MenuItem>
               </Menu>
-            </div>
+            </div> */}
           </div>
           <PlaylistContext.Provider value={[playlist, setPlaylist]}>
             <SongSearch />

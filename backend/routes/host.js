@@ -7,7 +7,7 @@ const spotify = require("../Spotify/spotifyHandler")
 var router = express.Router();
 
 router.post("/login", async (req, res) => {
-  log(`authrequest recieved: ${req.body.authCode}`);
+  console.log(`authrequest recieved: ${req.body.authCode}`);
   var accessAndRefreshTokens = await spotify.fetchAccessToken(
     req.body.authCode
   );

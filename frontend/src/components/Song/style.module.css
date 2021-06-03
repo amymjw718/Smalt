@@ -15,6 +15,7 @@
 }
 .tableRow {
   background: #333333;
+  width: 100%;
 }
 .tableCell {
   border-bottom: none;

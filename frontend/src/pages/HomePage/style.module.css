@@ -45,6 +45,9 @@
 }
 
 .backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
   size: 15;
   font-size: 18;
   background-color: #333333;
@@ -58,10 +61,34 @@
 .namelogo {
   color: white;
   font-size: 40px;
+  font-family: 'Archivo', sans-serif;
 }
 
-.name {
-  color: white;
+.codeDisplay {
+  color: rgb(197, 197, 197);
+  font-family: 'Roboto', sans-serif;
+}
+
+.code {
+  background: #3f3f3f;
+  font-size: 20px;
+  text-align: center;
+  width: 100px;
+}
+
+.codeContainer {
+  position: relative;
+  top: 3px;
+  width: 50%;
+  margin: auto;
+}
+
+.topBar {
+  text-align: center;
+}
+
+.songsContainer {
+  width: 80%;
 }
 
 .devButton {
