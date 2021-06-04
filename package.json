@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "@material-ui/core": "^4.11.4",
     "btoa": "^1.2.1"
   },
   "devDependencies": {

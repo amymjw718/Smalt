@@ -81,6 +81,7 @@
   top: 3px;
   width: 50%;
   margin: auto;
+  z-index: 50;
 }
 
 .topBar {
